@@ -31,3 +31,14 @@ class TestBaseModels(unittest.TestCase):
 
         b2 = BaseModel()
         self.assertEqual(dict, type(b2.to_dict()))
+
+    def test_date_and_time(self):
+        """
+        Checks created_at time and updated_at time.
+        """
+
+        b1 = BaseModel()
+        b1.name = "New name"
+
+        self.assertNotEqual(b1.created_at, b1.updated_at)
+        self.assertEqual(str, type(b1.__str__()))
