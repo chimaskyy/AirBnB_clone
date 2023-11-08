@@ -1,7 +1,17 @@
 #!/usr/bin/python3
+"""
+Data storage Mechanism
+FileStorage class definition
+"""
 
 import json
 from models.base_model import BaseModel
+from models.user import User
+from models.review import Review
+from models.city import City
+from models.state import State
+from models.amenity import Amenity
+from models.place import Place
 
 
 class FileStorage:
@@ -43,16 +53,24 @@ class FileStorage:
         """
 
         try:
-            with open(FileStorage.__file_path, "r", "utf-8") as json_file:
+            with open(FileStorage.__file_path, "r",
+                      encoding="utf-8") as json_file:
                 FileStorage.__objects = json.load(json_file)
-
         except Exception:
             return
 
     def Classes(self):
+
         """
         dictionary of all classes
         """
-        classes = {"BaseModel": BaseModel}
-        
+        classes = {"BaseModel": BaseModel,
+                   "User": User,
+                   "Place": Place,
+                   "Amenity": Amenity,
+                   "State": State,
+                   "City": City,
+                   "Review": Review
+                  }
+
         return classes
