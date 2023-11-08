@@ -81,6 +81,48 @@ Prints the string representation of an instance based on the class name and id
                     obj = storage.Classes()[class_name](**obj)
                     print(obj)
 
+    def do_destroy(self, line):
+        """Deletes an instance based on the class name and id
+        """
+        if not line:
+            print("** class name missing **")
+            return
+        lines = line.split(' ')
+        class_name = lines[0]
+        id_ = lines[1]
+        
+        if class_name not in storage.Classes():
+            print("** class doesn't exist **")
+            return
+        if len(lines) < 2:
+            print("** instance id missing **")
+            return
+        key = "{}.{}".format(class_name, id_)
+        if key not in storage.all():
+            print("** no instance found **")
+        else:
+            del storage.all()[key]
+            storage.save()
+
+    def do_all(self, line):
+        '''Prints all string representation of all instances based or
+        not class name
+        '''
+        if line:
+            lines = line.split(' ')
+            class_name = lines[0]
+
+            if  class_name not in storage.Classes():
+                print("** class doesn't exist **")
+                return
+            else:
+                list_ = [str(obj) for key, obj in storage.all().items()
+                        if obj.__class__.__name__ == class_name]
+                print(list_)
+        else:
+            n_list = [str(obj) for key, obj in storage.all().items()]
+            print(n_list)
+            
 
 
 
