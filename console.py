@@ -78,6 +78,7 @@ Prints the string representation of an instance based on the class name and id
                     print("** no instance found **")
                 else:
                     obj = storage.all()[key]
+                    obj = storage.Classes()[class_name](**obj)
                     print(obj)
 
 
