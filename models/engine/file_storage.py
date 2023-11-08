@@ -6,6 +6,12 @@ FileStorage class definition
 
 import json
 from models.base_model import BaseModel
+from models.user import User
+from models.review import Review
+from models.city import City
+from models.state import State
+from models.amenity import Amenity
+from models.place import Place
 
 
 class FileStorage:
@@ -58,6 +64,13 @@ class FileStorage:
         """
         dictionary of all classes
         """
-        classes = {"BaseModel": BaseModel}
-        
+        classes = {"BaseModel": BaseModel,
+                   "User": User,
+                   "Place": Place,
+                   "Amenity": Amenity,
+                   "State": State,
+                   "City": City,
+                   "Review": Review
+                  }
+
         return classes

@@ -6,7 +6,7 @@ Defines State Class, inherits from user.
 from .base_model import BaseModel
 
 
-class User(BaseModel):
+class State(BaseModel):
     """
     Defines User.
     """

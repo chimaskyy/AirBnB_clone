@@ -79,7 +79,9 @@ class HBNBCommand(cmd.Cmd):
                     print(obj)
 
     def do_destroy(self, line):
-        """Deletes an instance based on the class name and id
+        """
+Deletes an instance based on the class name and id
+Usage: destroy [Class] [id]
         """
         if not line:
             print("** class name missing **")
@@ -102,8 +104,9 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
 
     def do_all(self, line):
-        '''Prints all string representation of all instances based or
-        not class name
+        '''
+Prints all string representation of all instances based or
+not class name
         '''
         all_models = []
 
