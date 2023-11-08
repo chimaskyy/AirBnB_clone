@@ -44,6 +44,7 @@ Quit command to exit the program
             obj = class_obj()
             obj.save()
             print(obj.id)
+            del obj
         else:
             print("** class doesn't exist **")
 
@@ -108,6 +109,8 @@ Prints the string representation of an instance based on the class name and id
         '''Prints all string representation of all instances based or
         not class name
         '''
+        all_models = []
+
         if line:
             lines = line.split(' ')
             class_name = lines[0]
@@ -116,15 +119,16 @@ Prints the string representation of an instance based on the class name and id
                 print("** class doesn't exist **")
                 return
             else:
-                list_ = [str(obj) for key, obj in storage.all().items()
-                        if obj.__class__.__name__ == class_name]
-                print(list_)
+                for key, value in storage.all().items():
+                    if class_name in key:
+                        # each matching  model
+                        mo = storage.Classes()[class_name](**value)
+                        all_models.append(str(mo))
         else:
-            n_list = [str(obj) for key, obj in storage.all().items()]
-            print(n_list)
-            
-
-
+            for key, value in storage.all().items():
+                class_name = key.split('.')[0]
+                all_models.append(str(storage.Classes()[class_name](**value)))
+        print(all_models)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
