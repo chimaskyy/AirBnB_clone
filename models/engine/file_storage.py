@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""
+Data storage Mechanism
+FileStorage class definition
+"""
 
 import json
 
@@ -41,9 +45,8 @@ class FileStorage:
         """
 
         try:
-            with open(FileStorage.__file_path, "r", "utf-8") as json_file:
+            with open(FileStorage.__file_path, "r",
+                      encoding="utf-8") as json_file:
                 FileStorage.__objects = json.load(json_file)
-
         except Exception:
             return
-
