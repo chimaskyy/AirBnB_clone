@@ -5,6 +5,7 @@ FileStorage class definition
 """
 
 import json
+from models.base_model import BaseModel
 
 
 class FileStorage:
@@ -50,3 +51,12 @@ class FileStorage:
                 FileStorage.__objects = json.load(json_file)
         except Exception:
             return
+
+    def Classes(self):
+
+        """
+        dictionary of all classes
+        """
+        classes = {"BaseModel": BaseModel}
+        
+        return classes
