@@ -44,6 +44,7 @@ Quit command to exit the program
             obj = class_obj()
             obj.save()
             print(obj.id)
+            del obj
         else:
             print("** class doesn't exist **")
 
@@ -78,10 +79,56 @@ Prints the string representation of an instance based on the class name and id
                     print("** no instance found **")
                 else:
                     obj = storage.all()[key]
+                    obj = storage.Classes()[class_name](**obj)
                     print(obj)
 
+    def do_destroy(self, line):
+        """Deletes an instance based on the class name and id
+        """
+        if not line:
+            print("** class name missing **")
+            return
+        lines = line.split(' ')
+        class_name = lines[0]
+        id_ = lines[1]
+        
+        if class_name not in storage.Classes():
+            print("** class doesn't exist **")
+            return
+        if len(lines) < 2:
+            print("** instance id missing **")
+            return
+        key = "{}.{}".format(class_name, id_)
+        if key not in storage.all():
+            print("** no instance found **")
+        else:
+            del storage.all()[key]
+            storage.save()
 
+    def do_all(self, line):
+        '''Prints all string representation of all instances based or
+        not class name
+        '''
+        all_models = []
 
+        if line:
+            lines = line.split(' ')
+            class_name = lines[0]
+
+            if  class_name not in storage.Classes():
+                print("** class doesn't exist **")
+                return
+            else:
+                for key, value in storage.all().items():
+                    if class_name in key:
+                        # each matching  model
+                        mo = storage.Classes()[class_name](**value)
+                        all_models.append(str(mo))
+        else:
+            for key, value in storage.all().items():
+                class_name = key.split('.')[0]
+                all_models.append(str(storage.Classes()[class_name](**value)))
+        print(all_models)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
