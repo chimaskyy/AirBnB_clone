@@ -6,10 +6,10 @@ This module contains test cases for the BaseModel Class
 import unittest
 from unittest.mock import patch
 import io
-import models.base_model as models
-from models.base_model import BaseModel
 import json
 import datetime
+import models.base_model as models
+from models.base_model import BaseModel
 
 
 class TestBaseModels(unittest.TestCase):
@@ -44,9 +44,7 @@ class TestBaseModels(unittest.TestCase):
         Tests initialization with dictionary passed as parameter.
         """
 
-        model = BaseModel(**{
-            "name": "Another one",
-            "my_number": 69})
+        model = BaseModel(**{"name": "Another one", "my_number": 69})
         self.assertEqual(2, len(model.__dict__.keys()))
 
     def test_to_dict_method(self):
@@ -85,7 +83,7 @@ class TestBaseModels(unittest.TestCase):
         another.save()
 
         try:
-            with open("file.json", "r", encoding='utf-8') as js:
+            with open("file.json", "r", encoding="utf-8") as js:
                 file_content = js.read()
 
             self.assertIn(json.dumps(another.to_dict()), file_content)
