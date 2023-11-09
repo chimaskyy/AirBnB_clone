@@ -70,7 +70,6 @@ class FileStorage:
                    "Amenity": Amenity,
                    "State": State,
                    "City": City,
-                   "Review": Review
-                  }
+                   "Review": Review}
 
         return classes

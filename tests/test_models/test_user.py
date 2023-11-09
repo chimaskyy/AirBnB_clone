@@ -28,7 +28,7 @@ class TestUserClass(unittest.TestCase):
         self.assertIsInstance(user.first_name, str)
         self.assertIsInstance(user.last_name, str)
         self.assertIsInstance(user.password, str)
-        
+
         # Tests Values before assignment
         self.assertEqual(user.email, "")
         self.assertEqual(user.password, "")
