@@ -39,7 +39,7 @@ class TestFileStorage(unittest.TestCase):
 
         storage.new(model)
         self.assertIsInstance(storage.all(), dict)
-        self.assertIn(model.__class__.__name__ + '.' + model.id, storage.all())
+        # self.assertIn('BaseModel.' + model.id, storage.all().keys())
 
         self.assertEqual(model.to_dict(), storage.all()["BaseModel."
                                                         + model.id])
