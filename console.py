@@ -4,6 +4,7 @@ import cmd
 import sys
 from models import storage
 from models.base_model import BaseModel
+import re
 
 
 class HBNBCommand(cmd.Cmd):
@@ -21,6 +22,25 @@ class HBNBCommand(cmd.Cmd):
         exits the shell
         '''
         return True
+
+    def precmd(self, line):
+        """
+        edits line
+        """
+
+        if '.' in line:
+            line = line.replace('.', ' ').replace('(', ' ').replace(')', ' ')
+            line = line.replace(',', ' ')
+            line = line.split()
+            line[1], line[0] = line[0], line[1]
+            try:
+                line[2] = line[2].replace('"', '').replace("'", '')
+            except IndexError:
+                pass
+            line = ' '.join(line)
+            return cmd.Cmd.precmd(self, line)
+        else:
+            return cmd.Cmd.precmd(self, line)
 
     def do_quit(self, line):
         '''
@@ -69,7 +89,7 @@ class HBNBCommand(cmd.Cmd):
                 return
             else:
                 id_ = lines[1]
-        
+
                 key = "{}.{}".format(class_name, id_)
                 if key not in storage.all():
                     print("** no instance found **")
@@ -89,7 +109,7 @@ Usage: destroy [Class] [id]
         lines = line.split(' ')
         class_name = lines[0]
         id_ = lines[1]
-        
+
         if class_name not in storage.Classes():
             print("** class doesn't exist **")
             return
@@ -114,7 +134,7 @@ not class name
             lines = line.split(' ')
             class_name = lines[0]
 
-            if  class_name not in storage.Classes():
+            if class_name not in storage.Classes():
                 print("** class doesn't exist **")
                 return
             else:
@@ -128,6 +148,26 @@ not class name
                 class_name = key.split('.')[0]
                 all_models.append(str(storage.Classes()[class_name](**value)))
         print(all_models)
+
+    def do_count(self, line):
+        """
+Counts Number of Class Instance
+        """
+        count = 0
+        if not line:
+            print("** class name missing **")
+            return
+        else:
+            lines = line.split(' ')
+            class_name = lines[0]
+            if class_name not in storage.Classes():
+                print("** class doesn't exist **")
+                return
+
+        for key in storage.all():
+            if class_name in key:
+                count += 1
+        print(count)
 
     def do_update(self, line):
         """
@@ -146,7 +186,7 @@ not class name
             print("** instance id missing **")
             return
         if class_name + '.' + lines[1] not in storage.all():
-            print ("** no instance found **")
+            print("** no instance found **")
             return
         if len(lines) < 3:
             print("** attribute name missing **")
@@ -159,6 +199,7 @@ not class name
         if lines[2] not in ('updated_at', 'created_at', 'id'):
             storage.all()[key].update({lines[2]: eval(lines[3])})
             storage.save()
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
