@@ -107,10 +107,19 @@ class TestPlaceClass(unittest.TestCase):
 
         place = Place()
         place1 = Place()
-        attributes = ["user_id", "city_id", "name", "number_rooms",
-                      "number_bathrooms", "description", "longitude",
-                      "latitude", "max_guest", "price_by_night",
-                      "amenity_ids"]
+        attributes = [
+            "user_id",
+            "city_id",
+            "name",
+            "number_rooms",
+            "number_bathrooms",
+            "description",
+            "longitude",
+            "latitude",
+            "max_guest",
+            "price_by_night",
+            "amenity_ids",
+        ]
         self.assertNotEqual(place.id, place1.id)
         for attribute in attributes:
             self.assertNotIn(attribute, place.to_dict())
@@ -152,7 +161,7 @@ class TestPlaceClass(unittest.TestCase):
         place.save()
         self.assertNotEqual(place.updated_at, updated_at)
 
-        with open("file.json", "r", encoding='utf-8') as json_file:
+        with open("file.json", "r", encoding="utf-8") as json_file:
             data = json.load(json_file)
 
         self.assertEqual(place.to_dict(), data["Place." + place.id])
