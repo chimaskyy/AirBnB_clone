@@ -4,9 +4,9 @@ Contains Unit test for User Class.
 """
 
 import unittest
-from models.user import User
 import json
 import datetime
+from models.user import User
 
 
 class TestUserClass(unittest.TestCase):
@@ -28,7 +28,7 @@ class TestUserClass(unittest.TestCase):
         self.assertIsInstance(user.first_name, str)
         self.assertIsInstance(user.last_name, str)
         self.assertIsInstance(user.password, str)
-        
+
         # Tests Values before assignment
         self.assertEqual(user.email, "")
         self.assertEqual(user.password, "")
@@ -101,7 +101,7 @@ class TestUserClass(unittest.TestCase):
         user.save()
         self.assertNotEqual(user.updated_at, updated_at)
 
-        with open("file.json", "r", encoding='utf-8') as json_file:
+        with open("file.json", "r", encoding="utf-8") as json_file:
             data = json.load(json_file)
 
         self.assertIn(user.to_dict(), data.values())
