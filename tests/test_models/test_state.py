@@ -3,6 +3,7 @@
 Unit test for Place class.
 """
 
+import json
 import unittest
 from models.state import State
 from models.user import User
@@ -51,3 +52,20 @@ class TestStateClass(unittest.TestCase):
         state.name = "Ojuelegba"
 
         self.assertIn("name", state.to_dict())
+
+    def test_save_method(self):
+        """
+        Test class save method
+        """
+
+        state = State()
+        updated_at = state.updated_at
+
+        self.assertEqual(state.updated_at, updated_at)
+        state.save()
+        self.assertNotEqual(state.updated_at, updated_at)
+
+        with open("file.json", "r", encoding="utf-8") as json_file:
+            data = json.load(json_file)
+
+        self.assertEqual(state.to_dict(), data["State." + state.id])

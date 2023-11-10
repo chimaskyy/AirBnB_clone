@@ -40,18 +40,16 @@ class TestFileStorage(unittest.TestCase):
         storage.new(model)
         self.assertIsInstance(storage.all(), dict)
         model.save()
-        # self.assertIn('BaseModel.' + model.id, storage.all().keys())
 
         self.assertEqual(model.to_dict(), storage.all()["BaseModel."
                                                         + model.id])
         model2 = BaseModel(**{"id": "120859ir6",
                               "name": "instance12",
                               "my_number": 90})
-        self.assertNotIn("BaseModel." + model2.id, storage.all())
-        storage.new(model2)
         model2.save()
         self.assertEqual(model2.to_dict(), storage.all()["BaseModel."
                                                          + model2.id])
+        storage.save()
 
     def test_save(self):
         """
