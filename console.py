@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+The module contains the command intepreter
+"""
 
 import cmd
 import sys
