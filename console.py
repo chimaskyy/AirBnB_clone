@@ -35,7 +35,7 @@ Bypass empty line.
         edits line
         """
 
-        if '.' in line:
+        if '.' in line and ('(' in line and ')' in line):
             line = line.replace('.', ' ').replace('(', ' ').replace(')', ' ')
             line = line.split()
             line[1], line[0] = line[0], line[1]
@@ -122,7 +122,6 @@ Usage: destroy [Class] [id]
             return
         lines = line.split(' ')
         class_name = lines[0]
-        id_ = lines[1]
 
         if class_name not in storage.Classes():
             print("** class doesn't exist **")
@@ -130,6 +129,7 @@ Usage: destroy [Class] [id]
         if len(lines) < 2:
             print("** instance id missing **")
             return
+        id_ = lines[1]
         key = "{}.{}".format(class_name, id_)
         if key not in storage.all():
             print("** no instance found **")
@@ -205,7 +205,7 @@ Updates an instance attribute.
         if len(lines) < 3:
             print("** attribute name missing **")
             return
-        if type(eval(' '.join(lines[2:]))) is dict:
+        if '{' in lines[2] and type(eval(' '.join(lines[2:]))) is dict:
             new_values = eval(' '.join(lines[2:]))
             for key, value in new_values.items():
                 if key not in ("id", "created_at", "updated_at"):
