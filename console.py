@@ -42,13 +42,14 @@ Bypass empty line.
             try:
                 # removes quotation arround id passed as argument
                 line[2] = line[2].replace('"', '').replace("'", '')
-                for i in range(3):
-                    line[i] = line[i].replace(',', ' ')
+                line[2] = line[2].replace(',', '')
 
                 # protects the commas in the dictionary representation passed
                 if not ('{' in line[3] or '}' in line[3]):
+                    line[3] = line[3].replace('"', '').replace("'", "")
                     line[3] = ' '.join(line[3:])
-                    line[3].replace(',', '')
+                    line[3] = line[3].replace(',', '')
+                    line = line[:4]
             except IndexError:
                 pass
             line = ' '.join(line)
@@ -205,6 +206,7 @@ Updates an instance attribute.
         if len(lines) < 3:
             print("** attribute name missing **")
             return
+        # Extracts Dictionary if there is on
         if '{' in lines[2] and type(eval(' '.join(lines[2:]))) is dict:
             new_values = eval(' '.join(lines[2:]))
             for key, value in new_values.items():
