@@ -17,7 +17,7 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """
 Bypass empty line.
-	"""
+        """
         pass
 
     def do_EOF(self, line):
