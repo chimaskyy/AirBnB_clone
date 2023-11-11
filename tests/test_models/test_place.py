@@ -96,7 +96,7 @@ class TestPlaceClass(unittest.TestCase):
         place.latitude = 45
         self.assertNotEqual(place.latitude, 0.0)
 
-        place.amenity_ids = [Amenity() for i in range(5)]
+        place.amenity_ids = [Amenity().id for i in range(5)]
         self.assertNotEqual(place.amenity_ids, [])
         self.assertIsInstance(place.amenity_ids[0], str)
 
@@ -128,7 +128,7 @@ class TestPlaceClass(unittest.TestCase):
         place.user_id = User().id
         place.name = "Ibeju"
         place.city_id = City().id
-        place.description = "Over priced"
+        place.description = "Calm and nice"
         place.number_rooms = 4
         place.number_bathrooms = 2
         place.longitude = 99

@@ -30,11 +30,18 @@ class HBNBCommand(cmd.Cmd):
 
         if '.' in line:
             line = line.replace('.', ' ').replace('(', ' ').replace(')', ' ')
-            line = line.replace(',', ' ')
             line = line.split()
             line[1], line[0] = line[0], line[1]
             try:
+                # removes quotation arround id passed as argument
                 line[2] = line[2].replace('"', '').replace("'", '')
+                for i in range(3):
+                    line[i] = line[i].replace(',', ' ')
+
+                # protects the commas in the dictionary representation passed
+                if not ('{' in line[3] or '}' in line[3]):
+                    line[3] = ' '.join(line[3:])
+                    line[3].replace(',', '')
             except IndexError:
                 pass
             line = ' '.join(line)
@@ -191,14 +198,21 @@ Counts Number of Class Instance
         if len(lines) < 3:
             print("** attribute name missing **")
             return
-        if len(lines) < 4:
-            print("** value missing **")
-            return
-
-        key = class_name + '.' + lines[1]
-        if lines[2] not in ('updated_at', 'created_at', 'id'):
-            storage.all()[key].update({lines[2]: eval(lines[3])})
+        if type(eval(' '.join(lines[2:]))) is dict:
+            new_values = eval(' '.join(lines[2:]))
+            for key, value in new_values.items():
+                if key not in ("id", "created_at", "updated_at"):
+                    storage.all()[class_name + '.' + lines[1]][key] = value
             storage.save()
+        else:
+            if len(lines) < 4:
+                print("** value missing **")
+                return
+
+            key = class_name + '.' + lines[1]
+            if lines[2] not in ('updated_at', 'created_at', 'id'):
+                storage.all()[key].update({lines[2]: eval(lines[3])})
+                storage.save()
 
 
 if __name__ == '__main__':

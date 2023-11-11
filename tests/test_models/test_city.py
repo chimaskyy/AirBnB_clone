@@ -3,6 +3,7 @@
 Unit test for Place class.
 """
 
+import json
 import unittest
 from models.state import State
 from models.city import City
@@ -67,3 +68,20 @@ class TestCityClass(unittest.TestCase):
 
         self.assertIn("name", city.to_dict())
         self.assertIn("state_id", city.to_dict())
+
+    def test_save_method(self):
+        """
+        Test class save method
+        """
+
+        city = City()
+        updated_at = city.updated_at
+
+        self.assertEqual(city.updated_at, updated_at)
+        city.save()
+        self.assertNotEqual(city.updated_at, updated_at)
+
+        with open("file.json", "r", encoding="utf-8") as json_file:
+            data = json.load(json_file)
+
+        self.assertEqual(city.to_dict(), data["City." + city.id])
