@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""This model contains the base class
+"""
+This model contains the base class
 """
 import uuid
 from datetime import datetime
@@ -11,6 +12,9 @@ class BaseModel:
     base class
     """
     def __init__(self, *args, **kwargs):
+        """
+        Initializes instances.
+        """
 
         if kwargs:
             if "__class__" in kwargs:
@@ -27,12 +31,20 @@ class BaseModel:
             models.storage.new(self)
 
     def save(self):
+        """
+        saves Instances into storage
+        """
+
         self.updated_at = datetime.now()
         # reinitializes object for update
         models.storage.new(self)
         models.storage.save()
 
     def to_dict(self):
+        """
+        returns a dictionary representation of the instance
+        """
+
         diction = {}
         diction["__class__"] = self.__class__.__name__
 
@@ -44,5 +56,9 @@ class BaseModel:
         return diction
 
     def __str__(self):
+        """
+        returns string repsentation
+        """
+
         return "[{}] ({}) {}".format(self.__class__.__name__, self.id,
                                      self.__dict__)
