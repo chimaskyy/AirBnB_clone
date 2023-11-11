@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This model contains the base class
+This model contains the base class, parent to other classes.
 """
 import uuid
 from datetime import datetime
@@ -9,11 +9,11 @@ import models
 
 class BaseModel:
     """
-    base class
+    base class parent to other classes
     """
     def __init__(self, *args, **kwargs):
         """
-        Initializes instances.
+        Initializes instances with neccesary attributes.
         """
 
         if kwargs:
@@ -32,7 +32,7 @@ class BaseModel:
 
     def save(self):
         """
-        saves Instances into storage
+        saves Instances into storage file (json file).
         """
 
         self.updated_at = datetime.now()
@@ -42,7 +42,8 @@ class BaseModel:
 
     def to_dict(self):
         """
-        returns a dictionary representation of the instance
+        returns a dictionary representation of the instance which contains all
+        attributes of the instance.
         """
 
         diction = {}
@@ -57,7 +58,7 @@ class BaseModel:
 
     def __str__(self):
         """
-        returns string repsentation
+        returns printable string repsentation of the class instance.
         """
 
         return "[{}] ({}) {}".format(self.__class__.__name__, self.id,

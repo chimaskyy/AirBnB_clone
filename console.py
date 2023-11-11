@@ -15,12 +15,16 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
 
     def emptyline(self):
+        """
+Bypass empty line.
+	"""
         pass
 
     def do_EOF(self, line):
         '''
         exits the shell
         '''
+        print()
         return True
 
     def precmd(self, line):
@@ -51,14 +55,14 @@ class HBNBCommand(cmd.Cmd):
 
     def do_quit(self, line):
         '''
-        Quit command to exit the program
+Quit command to exit the program
         '''
         return True
 
     def do_create(self, line):
         '''
-        Creates a new instance of BaseModel, saves it (to the JSON file)
-        and prints the id
+Creates a new instance of BaseModel, saves it (to the JSON file)
+and prints the id
         '''
 
         if not line:
@@ -79,8 +83,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, line):
         '''
-        Prints the string representation of an
-        instance based on the class name and id
+Prints the string representation of an
+instance based on the class name and id
         '''
         if not line:
             print("** class name missing **")
@@ -178,7 +182,7 @@ Counts Number of Class Instance
 
     def do_update(self, line):
         """
-        Updates an instance attribute.
+Updates an instance attribute.
         """
 
         if not line:
