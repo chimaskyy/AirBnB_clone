@@ -20,14 +20,14 @@ class FileStorage:
     """
 
     __file_path = "file.json"
-    __objects = {}   # Stores all objects
+    __objects = {}  # Stores all objects
 
     def all(self):
         """
         returns all objects
         """
 
-        self.reload()
+        # self.reload()
         return FileStorage.__objects
 
     def new(self, obj):
@@ -35,7 +35,7 @@ class FileStorage:
         adds `obj` to  __objects dict
         """
 
-        key = obj.__class__.__name__ + '.' + obj.id
+        key = obj.__class__.__name__ + "." + obj.id
 
         FileStorage.__objects[key] = obj.to_dict()
 
@@ -44,7 +44,7 @@ class FileStorage:
         Serializes __objects to json file.
         """
 
-        with open(FileStorage.__file_path, "w", encoding='utf-8') as json_file:
+        with open(FileStorage.__file_path, "w", encoding="utf-8") as json_file:
             json.dump(FileStorage.__objects, json_file)
 
     def reload(self):
@@ -53,23 +53,23 @@ class FileStorage:
         """
 
         try:
-            with open(FileStorage.__file_path, "r",
-                      encoding="utf-8") as json_file:
+            with open(FileStorage.__file_path, "r", encoding="utf-8") as json_file:
                 FileStorage.__objects = json.load(json_file)
         except Exception:
             return
 
     def Classes(self):
-
         """
         dictionary of all classes
         """
-        classes = {"BaseModel": BaseModel,
-                   "User": User,
-                   "Place": Place,
-                   "Amenity": Amenity,
-                   "State": State,
-                   "City": City,
-                   "Review": Review}
+        classes = {
+            "BaseModel": BaseModel,
+            "User": User,
+            "Place": Place,
+            "Amenity": Amenity,
+            "State": State,
+            "City": City,
+            "Review": Review,
+        }
 
         return classes

@@ -4,11 +4,11 @@ Tests FileStorage class.
 """
 
 import unittest
-from models.engine.file_storage import FileStorage
 import json
+import os
+from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
 from models.user import User
-import os
 
 
 class TestFileStorage(unittest.TestCase):
@@ -41,14 +41,10 @@ class TestFileStorage(unittest.TestCase):
         self.assertIsInstance(storage.all(), dict)
         model.save()
 
-        self.assertEqual(model.to_dict(), storage.all()["BaseModel."
-                                                        + model.id])
-        model2 = BaseModel(**{"id": "120859ir6",
-                              "name": "instance12",
-                              "my_number": 90})
+        self.assertEqual(model.to_dict(), storage.all()["BaseModel." + model.id])
+        model2 = BaseModel(**{"id": "120859ir6", "name": "instance12", "my_number": 90})
         model2.save()
-        self.assertEqual(model2.to_dict(), storage.all()["BaseModel."
-                                                         + model2.id])
+        self.assertEqual(model2.to_dict(), storage.all()["BaseModel." + model2.id])
         storage.save()
 
     def test_save(self):
@@ -61,13 +57,13 @@ class TestFileStorage(unittest.TestCase):
         model_user = User()
         model_user.name = "Pius Aaron"
         model.save()
-        with open("file.json", "r", encoding='utf-8') as json_file:
+        with open("file.json", "r", encoding="utf-8") as json_file:
             data = json.load(json_file)
 
         self.assertTrue(model.to_dict() in data.values())
 
         model_user.save()
-        with open("file.json", "r", encoding='utf-8') as json_file:
+        with open("file.json", "r", encoding="utf-8") as json_file:
             data = json.load(json_file)
 
         self.assertTrue(model_user.to_dict() in data.values())
@@ -80,7 +76,7 @@ class TestFileStorage(unittest.TestCase):
         store = FileStorage()
         store.reload()
 
-        with open("file.json", "r", encoding='utf-8') as json_file:
+        with open("file.json", "r", encoding="utf-8") as json_file:
             data = json.load(json_file)
 
         self.maxDiff = None
