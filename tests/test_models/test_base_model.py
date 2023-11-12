@@ -69,9 +69,15 @@ class TestBaseModels(unittest.TestCase):
 
         b1 = BaseModel()
         b1.name = "New name"
+        b1.id = "e34r-r45t-65t7-7y64"
+        b1.created_at = "2023-12-05T21:45:56.7684"
         b1.save()
+        b1.updated_at = "2023-12-05T21:45:56.7690"
 
         self.assertNotEqual(b1.created_at, b1.updated_at)
+        self.assertEqual(b1.id, "e34r-r45t-65t7-7y64")
+        self.assertEqual(b1.created_at, "2023-12-05T21:45:56.7684")
+        self.assertEqual(b1.updated_at, "2023-12-05T21:45:56.7690")
         self.assertEqual(str, type(b1.__str__()))
 
     def test_base_method_save(self):
