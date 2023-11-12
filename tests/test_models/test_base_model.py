@@ -25,6 +25,7 @@ class TestBaseModels(unittest.TestCase):
         b1 = BaseModel()
         self.assertEqual(str, type(b1.id))
         self.assertEqual(models.datetime, type(b1.created_at))
+        self.assertEqual(models.datetime, type(b1.updated_at))
 
     def test_base_init(self):
         """
