@@ -5,7 +5,7 @@ This module contains test cases for the BaseModel Class
 
 import unittest
 from unittest.mock import patch
-import io
+from io import StringIO
 import json
 import datetime
 import models.base_model as models
@@ -96,3 +96,21 @@ class TestBaseModels(unittest.TestCase):
             self.assertIn(json.dumps(another.to_dict()), file_content)
         except FileNotFoundError:
             return
+
+    def test_str_(self):
+        """
+        Test __str__ method of BaseModel class
+        """
+
+        model = BaseModel()
+        model.id = "23456789"
+        model.created_at = "2023-12-05T21:45:56.7684"
+        model.updated_at = "2023-12-05T21:45:56.7690"
+
+        with patch("sys.stdout", new_callable=StringIO) as stdout:
+            print(model)
+            expected = "[BaseModel] (23456789) {'id': '23456789', 'created_at': '2023-12-05T21:45:56.7684', 'updated_at': '2023-12-05T21:45:56.7690'}"
+
+            output = stdout.getvalue().strip()
+
+            self.assertEqual(output, expected)
