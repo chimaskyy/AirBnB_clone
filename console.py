@@ -57,6 +57,33 @@ Bypass empty line.
         else:
             return cmd.Cmd.precmd(self, line)
 
+    def onecmd(self, line):
+        """
+        edits line
+        """
+
+        if '.' in line and ('(' in line and ')' in line):
+            line = line.replace('.', ' ').replace('(', ' ').replace(')', ' ')
+            line = line.split()
+            line[1], line[0] = line[0], line[1]
+            try:
+                # removes quotation arround id passed as argument
+                line[2] = line[2].replace('"', '').replace("'", '')
+                line[2] = line[2].replace(',', '')
+
+                # protects the commas in the dictionary representation passed
+                if not ('{' in line[3] or '}' in line[3]):
+                    line[3] = line[3].replace('"', '').replace("'", "")
+                    line[3] = ' '.join(line[3:])
+                    line[3] = line[3].replace(',', '')
+                    line = line[:4]
+            except IndexError:
+                pass
+            line = ' '.join(line)
+            return cmd.Cmd.onecmd(self, line)
+        else:
+            return cmd.Cmd.onecmd(self, line)
+
     def do_quit(self, line):
         '''
 Quit command to exit the program

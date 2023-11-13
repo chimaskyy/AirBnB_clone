@@ -183,7 +183,7 @@ instance based on the class name and id"""
         Test the show command with no class name
         """
         with patch("sys.stdout", new_callable=StringIO) as mock_stdout:
-            console.HBNBCommand().onecmd("all {}".format(class_name))
+            console.HBNBCommand().onecmd("{}.all()".format(class_name))
             output = mock_stdout.getvalue().strip()
 
         try:
@@ -208,3 +208,130 @@ instance based on the class name and id"""
         self.helper_test_all_with_class("Place")
         self.helper_test_all_with_class("Review")
         self.helper_test_all_with_class("Amenity")
+
+    def helper_test_update_command(self, class_name):
+        """
+        Tests the Update command.
+        """
+
+        obj_ = FileStorage().Classes()[class_name]()
+        obj_.save()
+        id_ = obj_.id
+        expected = ''
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            command = "{}.update({},".format(class_name, id_) +\
+                      " 'name', 'New_name')"
+            console.HBNBCommand().onecmd(command)
+            output = mock_stdout.getvalue().strip()
+            self.assertEqual(output, expected)
+
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            command = "{}.update({}, ".format(class_name, id_) +\
+                      " { 'name': 'New_name' }"
+
+    def test_update_command(self):
+        """
+        test update command on all classes.
+        """
+
+        self.helper_test_update_command("BaseModel")
+        self.helper_test_update_command("User")
+        self.helper_test_update_command("City")
+        self.helper_test_update_command("State")
+        self.helper_test_update_command("Place")
+        self.helper_test_update_command("Amenity")
+        self.helper_test_update_command("Review")
+
+    def helper_test_destroy_command(self, class_name):
+        """
+        Tests the Update command.
+        """
+
+        obj_ = FileStorage().Classes()[class_name]()
+        obj_.save()
+        id_ = obj_.id
+        expected = ''
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            console.HBNBCommand().onecmd("{}.destroy({})"
+                                         .format(class_name, id_))
+            output = mock_stdout.getvalue().strip()
+            self.assertEqual(output, expected)
+
+    def test_destroy_command(self):
+        """
+        test update command on all classes.
+        """
+
+        self.helper_test_destroy_command("BaseModel")
+        self.helper_test_destroy_command("User")
+        self.helper_test_destroy_command("City")
+        self.helper_test_destroy_command("State")
+        self.helper_test_destroy_command("Place")
+        self.helper_test_destroy_command("Amenity")
+        self.helper_test_destroy_command("Review")
+
+    def helper_test_show_command(self, class_name):
+        """
+        Tests the Update command.
+        """
+
+        obj_ = FileStorage().Classes()[class_name]()
+        obj_.save()
+        id_ = obj_.id
+        expected = str(obj_)
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            console.HBNBCommand().onecmd("{}.show({})"
+                                         .format(class_name, id_))
+            output = mock_stdout.getvalue().strip()
+            self.assertEqual(output, expected)
+
+    def test_show_command(self):
+        """
+        test update command on all classes.
+        """
+
+        self.helper_test_show_command("BaseModel")
+        self.helper_test_show_command("User")
+        self.helper_test_show_command("City")
+        self.helper_test_show_command("State")
+        self.helper_test_show_command("Place")
+        self.helper_test_show_command("Amenity")
+        self.helper_test_show_command("Review")
+
+    def helper_test_create_command(self, class_name):
+        """
+        Tests the create command.
+        """
+
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            console.HBNBCommand().onecmd("{}.create()")
+            output = mock_stdout.getvalue().strip()
+
+    def test_show_command(self):
+        """
+        test update command on all classes.
+        """
+
+        self.helper_test_create_command("BaseModel")
+        self.helper_test_create_command("User")
+        self.helper_test_create_command("City")
+        self.helper_test_create_command("State")
+        self.helper_test_create_command("Place")
+        self.helper_test_create_command("Amenity")
+        self.helper_test_create_command("Review")
+
+    def test_EOF(self):
+        """
+        Tests EOF
+        """
+
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            console.HBNBCommand().onecmd("EOF")
+
+    def test_quit(self):
+        """
+        Tests quit command
+        """
+
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            console.HBNBCommand().onecmd("EOF")
