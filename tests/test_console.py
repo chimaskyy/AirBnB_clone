@@ -219,7 +219,7 @@ instance based on the class name and id"""
         id_ = obj_.id
         expected = ''
         with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
-            command = "{}.update({},".format(class_name, id_) +\
+            command = "{}.update({},".format(class_name, id_) + \
                       " 'name', 'New_name')"
             console.HBNBCommand().onecmd(command)
             output = mock_stdout.getvalue().strip()
@@ -231,11 +231,6 @@ instance based on the class name and id"""
             self.assertEqual(mock_stdout.getvalue().strip(), expected)
             console.HBNBCommand().onecmd(command)
             self.assertEqual(mock_stdout.getvalue().strip(), expected)
-
-        # with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
-        #     command = "update {} {}, name 'Paul'".format(class_name, id_)
-        #     console.HBNBCommand().onecmd(command)
-        #     self.assertEqual(mock_stdout.getvalue().strip(), expected)
 
     def test_update_command(self):
         """
@@ -263,7 +258,7 @@ instance based on the class name and id"""
             command = "{}.destroy({})".format(class_name, id_)
             console.HBNBCommand().onecmd(command)
             output = mock_stdout.getvalue().strip()
-            self.assertEqual(mock_stdout.getvalue().strip(), expected)
+            self.assertEqual(output, expected)
 
     def test_destroy_command(self):
         """
@@ -318,6 +313,8 @@ instance based on the class name and id"""
         with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
             console.HBNBCommand().onecmd("create {}".format(class_name))
             output = mock_stdout.getvalue().strip()
+            expected = output
+            self.assertEqual(output, expected)
 
     def test_create_command(self):
         """
@@ -376,4 +373,11 @@ instance based on the class name and id"""
 
         with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
             console.HBNBCommand().onecmd("quit")
+            self.assertEqual('', mock_stdout.getvalue().strip())
+
+    def test_empty_line(self):
+        """Tests empline parsing"""
+
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            console.HBNBCommand().onecmd("")
             self.assertEqual('', mock_stdout.getvalue().strip())
