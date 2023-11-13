@@ -227,7 +227,11 @@ instance based on the class name and id"""
 
         with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
             command = "{}.update({}, ".format(class_name, id_) +\
-                      " { 'name': 'New_name' }"
+                      " { 'age': 'Forty' }"
+            console.HBNBCommand().onecmd(command)
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            command = "update {} {}, name 'Paul'".format(class_name, id_)
+            console.HBNBCommand().onecmd(command)
 
     def test_update_command(self):
         """
@@ -304,10 +308,14 @@ instance based on the class name and id"""
         """
 
         with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
-            console.HBNBCommand().onecmd("{}.create()")
+            console.HBNBCommand().onecmd("{}.create()".format(class_name))
             output = mock_stdout.getvalue().strip()
 
-    def test_show_command(self):
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            console.HBNBCommand().onecmd("create {}".format(class_name))
+            output = mock_stdout.getvalue().strip()
+
+    def test_create_command(self):
         """
         test update command on all classes.
         """
@@ -319,6 +327,34 @@ instance based on the class name and id"""
         self.helper_test_create_command("Place")
         self.helper_test_create_command("Amenity")
         self.helper_test_create_command("Review")
+
+    def helper_test_count_command(self, class_name):
+        """
+        Tests the create command.
+        """
+
+        count = 0
+        for obj in FileStorage().all():
+            if class_name in obj:
+                count += 1
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            console.HBNBCommand().onecmd("{}.count()".format(class_name))
+            output = mock_stdout.getvalue().strip()
+
+        self.assertEqual(str(count), output)
+
+    def test_count_command(self):
+        """
+        test update command on all classes.
+        """
+
+        self.helper_test_count_command("BaseModel")
+        self.helper_test_count_command("User")
+        self.helper_test_count_command("City")
+        self.helper_test_count_command("State")
+        self.helper_test_count_command("Place")
+        self.helper_test_count_command("Amenity")
+        self.helper_test_count_command("Review")
 
     def test_EOF(self):
         """
@@ -334,4 +370,4 @@ instance based on the class name and id"""
         """
 
         with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
-            console.HBNBCommand().onecmd("EOF")
+            console.HBNBCommand().onecmd("quit")
