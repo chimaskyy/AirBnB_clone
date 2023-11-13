@@ -28,6 +28,14 @@ class TestFileStorage(unittest.TestCase):
         with self.assertRaises(AttributeError):
             storage.__file_path
 
+    def test_file_path_isNone(self):
+        storage = FileStorage()
+        storage._FileStorage__file_path = None
+        self.assertIsNone(storage._FileStorage__file_path)
+        storage.__objects = {}
+        storage.reload()
+        self.assertEqual(storage.__objects, {})
+
     def test_method_new_and_all(self):
         """
         tests class method all.
