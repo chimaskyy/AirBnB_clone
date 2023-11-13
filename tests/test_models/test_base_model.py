@@ -111,7 +111,10 @@ class TestBaseModels(unittest.TestCase):
 
         with patch("sys.stdout", new_callable=StringIO) as stdout:
             print(model)
-            expected = "[BaseModel] (23456789) {'id': '23456789', 'created_at': '2023-12-05T21:45:56.7684', 'updated_at': '2023-12-05T21:45:56.7690'}"
+            expected = "[BaseModel] (23456789) {'id': '23456789', " +\
+                       "'created_at': '2023-12-05T21:45:56.7684', " +\
+                       "'updated_at': '" +\
+                       "2023-12-05T21:45:56.7690'}"
 
             output = stdout.getvalue().strip()
 
