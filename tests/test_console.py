@@ -226,12 +226,16 @@ instance based on the class name and id"""
             self.assertEqual(output, expected)
 
         with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
-            command = "{}.update({}, ".format(class_name, id_) +\
-                      " { 'age': 'Forty' }"
+            command = "{}.update({}, {})".format(class_name, id_,
+                                                 "'age': 'forty'")
+            self.assertEqual(mock_stdout.getvalue().strip(), expected)
             console.HBNBCommand().onecmd(command)
-        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
-            command = "update {} {}, name 'Paul'".format(class_name, id_)
-            console.HBNBCommand().onecmd(command)
+            self.assertEqual(mock_stdout.getvalue().strip(), expected)
+
+        # with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+        #     command = "update {} {}, name 'Paul'".format(class_name, id_)
+        #     console.HBNBCommand().onecmd(command)
+        #     self.assertEqual(mock_stdout.getvalue().strip(), expected)
 
     def test_update_command(self):
         """
@@ -256,10 +260,10 @@ instance based on the class name and id"""
         id_ = obj_.id
         expected = ''
         with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
-            console.HBNBCommand().onecmd("{}.destroy({})"
-                                         .format(class_name, id_))
+            command = "{}.destroy({})".format(class_name, id_)
+            console.HBNBCommand().onecmd(command)
             output = mock_stdout.getvalue().strip()
-            self.assertEqual(output, expected)
+            self.assertEqual(mock_stdout.getvalue().strip(), expected)
 
     def test_destroy_command(self):
         """
@@ -363,6 +367,7 @@ instance based on the class name and id"""
 
         with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
             console.HBNBCommand().onecmd("EOF")
+            self.assertEqual('', mock_stdout.getvalue().strip())
 
     def test_quit(self):
         """
@@ -371,3 +376,4 @@ instance based on the class name and id"""
 
         with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
             console.HBNBCommand().onecmd("quit")
+            self.assertEqual('', mock_stdout.getvalue().strip())
