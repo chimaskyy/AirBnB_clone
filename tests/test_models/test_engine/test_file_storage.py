@@ -49,10 +49,13 @@ class TestFileStorage(unittest.TestCase):
         self.assertIsInstance(storage.all(), dict)
         model.save()
 
-        self.assertEqual(model.to_dict(), storage.all()["BaseModel." + model.id])
-        model2 = BaseModel(**{"id": "120859ir6", "name": "instance12", "my_number": 90})
+        self.assertEqual(model.to_dict(), storage.all()["BaseModel." +
+                                                        model.id])
+        model2 = BaseModel(**{"id": "120859ir6", "name": "instance12",
+                              "my_number": 90})
         model2.save()
-        self.assertEqual(model2.to_dict(), storage.all()["BaseModel." + model2.id])
+        self.assertEqual(model2.to_dict(), storage.all()["BaseModel." +
+                                                         model2.id])
         storage.save()
 
     def test_save(self):
