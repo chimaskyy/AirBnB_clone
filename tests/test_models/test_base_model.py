@@ -8,6 +8,7 @@ from unittest.mock import patch
 import io
 import json
 import datetime
+from models.engine.file_storage import FileStorage
 import models.base_model as models
 from models.base_model import BaseModel
 
@@ -79,6 +80,7 @@ class TestBaseModels(unittest.TestCase):
         self.assertEqual(b1.created_at, "2023-12-05T21:45:56.7684")
         self.assertEqual(b1.updated_at, "2023-12-05T21:45:56.7690")
         self.assertEqual(str, type(b1.__str__()))
+        del FileStorage().all()['BaseModel.' + b1.id]
 
     def test_base_method_save(self):
         """
