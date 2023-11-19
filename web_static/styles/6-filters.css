@@ -1,0 +1,79 @@
+section.filters {
+    background-color: white;
+    height: 70px;
+    width: 100%;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+}
+button {
+    font-size: 18px;
+    background-color: #FF5A5F;
+    color: #FFFFFF;
+    height: 48px;
+    width: 20%;
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+    margin: 10px 30px;
+}
+ button:hover {
+    opacity: 0.9;
+ }
+ .locations,
+ .amenities {
+    height: 100%;
+    width: 25%;
+    float: left;
+    
+ }
+ .locations {
+    border-right: 1px solid #DDDDDD;
+ }
+ .locations h3,
+ .amenities h3 {
+    font-weight: 600;
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 0px;
+    text-align: left;
+    margin-left: 30px;
+ }
+ .locations h4,
+ .amenities h4 {
+    font-weight: 400;
+    font-size: 14px;
+    text-align: left;
+    margin-left: 30px;
+    margin-top: 0px;
+}
+/* amenities and location dropdown*/
+.popover {
+   background-color:  #FAFAFA;
+   border:#DDDDDD 1px solid;
+   list-style: none;
+   border-radius: 5px;
+   z-index: 1;
+   position: relative;
+   display: none;
+   margin-top: 0%;
+   cursor: pointer;     
+}
+.popover h2 {
+   font-size: 16px;
+   padding-right: 10%;
+}
+.locations:hover .popover,
+.amenities:hover .popover {
+   display: block;
+}
+li {
+   list-style: none;
+   margin: 5px 0px;
+}
+.locations .popover li ul {
+   padding-right:10%;
+
+ 
+}
+
