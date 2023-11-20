@@ -1,6 +1,8 @@
-/*section.places h1{
-    text-align: left;
-}*/
+.article-block{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 .places h1{
     font-size: 30px;
     text-align: left;
